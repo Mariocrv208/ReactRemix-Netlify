@@ -13,27 +13,24 @@ import {
 import { db } from "~/utils/db.server";
 import stylesUrl from "~/styles/jokes.css";
 
-export const links: LinksFunction = () => {
+export let links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
 type LoaderData = {
-  jokeListItems: Array<{ id: string; name: string }>;
+  jokeListItems: Array<Pick<Joke, 'id' | 'name'>>;
 };
 
-export const loader: LoaderFunction = async () => {
-  const data: LoaderData = {
-    jokeListItems: await db.joke.findMany({
-      take: 7,
-      select: { id: true, name: true },
-      orderBy: { createdAt: "desc" },
-    }),
-  };
-  return json(data);
+export let loader: LoaderFunction = async () => {
+  let jokeListItems = await db.joke.findMany({
+    select: {id: true, name: true}
+  })
+  let data: LoaderData = { jokeListItems}
+  return data;
 };
 
 export default function JokesRoute() {
-  const data = useLoaderData<LoaderData>();
+  let data = useLoaderData<LoaderData>();
 
   return (
     <div className="jokes-layout">
@@ -57,9 +54,9 @@ export default function JokesRoute() {
             <Link to=".">Get a random joke</Link>
             <p>Here are a few more jokes to check out:</p>
             <ul>
-              {data.jokeListItems.map((joke) => (
-                <li key={joke.id}>
-                  <Link to={joke.id}>{joke.name}</Link>
+              {data.jokeListItems.map(j => (
+                <li key={j.id}>
+                  <Link to={j.id}>{j.name}</Link>
                 </li>
               ))}
             </ul>
