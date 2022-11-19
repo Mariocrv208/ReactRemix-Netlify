@@ -1,9 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "windows"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "rhel-openssl-1.1.x"]
 }
 
 datasource db {
@@ -23,9 +20,9 @@ model User {
 model Joke {
   id         String   @id @default(uuid())
   jokesterId String
-  jokester   User     @relation(fields: [jokesterId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   name       String
   content    String
+  jokester   User     @relation(fields: [jokesterId], references: [id], onDelete: Cascade)
 }

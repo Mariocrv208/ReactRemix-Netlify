@@ -1,5 +1,5 @@
 [build]
-  command = "remix build"
+  command = "remix build&&npx prisma generate"
   publish = "public"
 
 [dev]
