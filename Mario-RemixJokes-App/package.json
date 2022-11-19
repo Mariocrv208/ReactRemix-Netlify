@@ -5,7 +5,7 @@
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "scripts": {
-    "build": "npx prisma generate&&remix build",
+    "build": "remix build",
     "dev": "remix dev",
     "start": "cross-env NODE_ENV=production netlify dev"
   },
@@ -28,6 +28,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "esbuild": "^0.15.14",
     "esbuild-register": "^3.4.1",
     "eslint": "^8.27.0",
     "laravel-mix": "^6.0.49",
